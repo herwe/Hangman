@@ -1,5 +1,4 @@
 import tkinter as tk
-from RandomWordGenerator import RandomWord
 
 if __name__ == '__main__':
     root = tk.Tk()
@@ -7,7 +6,9 @@ if __name__ == '__main__':
     root.resizable(0, 0)
     button = tk.Button(text="Click me!", width=25, height=5, bg="blue", fg="yellow",)
     button.pack()
-    r = RandomWord(max_word_size=5)
-    print(r.generate())
+    with open("words.txt") as f:
+        my_list = f.readlines()
 
-    root.mainloop()
+
+
+    #root.mainloop()
