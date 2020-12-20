@@ -15,7 +15,6 @@ if __name__ == '__main__':
 
     test = Stickman()
     print(test.words_dict.get("t"))
-    for i in range(25):
-        print(ui.alpha_btns[i])
+
 
 
