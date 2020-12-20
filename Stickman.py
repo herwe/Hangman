@@ -3,7 +3,7 @@ from GenerateString import GenerateString
 
 class Stickman:
     lines = None
-    words_dict = None
+    words_dict = {}
     rmdStr = None
 
     def __init__(self):
@@ -11,7 +11,7 @@ class Stickman:
         self.rmdStr = temp.rmdWord
         self.lines = 0
         for i in range(97, 123):
-            self.words_dict = {chr(i): self.rmdStr}
+            self.words_dict[chr(i)] = self.rmdStr
 
     # def draw(self):
 
