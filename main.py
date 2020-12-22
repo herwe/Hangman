@@ -12,9 +12,8 @@ if __name__ == '__main__':
 
     ui = UI()
 
-
     test = Stickman()
-    print(test.words_dict.get("t"))
+   # print(test.words_dict.get("t"))
 
 
 
