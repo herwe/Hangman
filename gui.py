@@ -21,16 +21,22 @@ class UI:
     def __init__(self):
         self.root.geometry("850x600")
         self.root.resizable(0, 0)
-        self.setupPic()
+        #self.setupPic()
         self.setupBottomFrame()
         self.setupButtons()
         self.root.mainloop()
 
     def clickBtn(self, buttonChr):
+        checkPic = False
         word = self.stickman.words_dict.get("a")
         for i in range(0, len(self.alpha_btns)):
             if self.alpha_btns[i].cget('text') == buttonChr.upper():
                 self.alpha_btns[i].config(state='disabled')
+                checkPic = True
+
+        if checkPic:
+            self.setupPic()
+
         for i in range(0, len(word)):
             if (word[i] == buttonChr):
                 tempLabel = self.label_vars[i]
@@ -41,22 +47,20 @@ class UI:
     # self.label = tk.Label(textvariable=self.label_var)
 
     def setupPic(self):
-        #self.frame = tk.Frame(self.root, borderwidth=0, padx=0, pady=0)
-       # self.frame.grid(column=1, row=1)
-        #self.frame.place(bordermode=tk.INSIDE, height=100, width=100)
+        # self.frame = tk.Frame(self.root, borderwidth=0, padx=0, pady=0)
+        # self.frame.grid(column=1, row=1)
+        # self.frame.place(bordermode=tk.INSIDE, height=100, width=100)
         url = "https://i.imgur.com/njRN5gQ.png"
         response = requests.get(url)
         img_data = response.content
         self.img = ImageTk.PhotoImage(Image.open(BytesIO(img_data)))
         canvas = tk.Canvas(self.root, width=462, height=354)
-        canvas.place(height=600, width=500, x=180, y=10)
+        canvas.place(height=300, width=500, x=300, y=10)
         canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
-       # canvas.grid(column=1, row=1)
 
-        #img = Image.open(url)
+    # canvas.grid(column=1, row=1)
 
-
-
+    # img = Image.open(url)
 
     def setupButtons(self):
         control = 1

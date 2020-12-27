@@ -1,11 +1,16 @@
 from GenerateString import GenerateString
+from PIL import ImageTk, Image
+import requests
+from io import BytesIO
 
 
 class Stickman:
     lines = None
     words_dict = {}
     rmdStr = None
-    pics = []
+    picsUrl = ["https://i.imgur.com/tpj2ULE.png", "https://i.imgur.com/wzhJsGK.png", "https://i.imgur.com/o5T1IjB.png",
+                    "https://i.imgur.com/1iWJtaw.png", "https://i.imgur.com/4CWAWkK.png", "https://i.imgur.com/njRN5gQ.png"]
+    currentImg = None
 
     def __init__(self):
         temp = GenerateString()
@@ -14,7 +19,6 @@ class Stickman:
         for i in range(97, 123):
             self.words_dict[chr(i)] = self.rmdStr
 
-    # def draw(self):
 
     def add(self):
         self.lines += 1
