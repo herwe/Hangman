@@ -44,12 +44,12 @@ class UI:
         #self.frame = tk.Frame(self.root, borderwidth=0, padx=0, pady=0)
        # self.frame.grid(column=1, row=1)
         #self.frame.place(bordermode=tk.INSIDE, height=100, width=100)
-        url = "https://cdn57.androidauthority.net/wp-content/uploads/2019/04/Microsoft-Windows-11-1200x675.jpg"
+        url = "https://i.imgur.com/njRN5gQ.png"
         response = requests.get(url)
         img_data = response.content
         self.img = ImageTk.PhotoImage(Image.open(BytesIO(img_data)))
-        canvas = tk.Canvas(self.root, width=462, height=346)
-        canvas.place(height=462, width=346, x=350, y=10)
+        canvas = tk.Canvas(self.root, width=462, height=354)
+        canvas.place(height=600, width=500, x=180, y=10)
         canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
        # canvas.grid(column=1, row=1)
 

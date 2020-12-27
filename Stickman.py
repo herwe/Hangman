@@ -5,6 +5,7 @@ class Stickman:
     lines = None
     words_dict = {}
     rmdStr = None
+    pics = []
 
     def __init__(self):
         temp = GenerateString()
