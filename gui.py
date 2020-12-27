@@ -17,11 +17,14 @@ class UI:
     label_vars = []
     img = None
     frame = None
+    canvas = None
+    newImg = None
+    counter = 1
 
     def __init__(self):
         self.root.geometry("850x600")
         self.root.resizable(0, 0)
-        #self.setupPic()
+        self.setupPic()
         self.setupBottomFrame()
         self.setupButtons()
         self.root.mainloop()
@@ -32,16 +35,16 @@ class UI:
         for i in range(0, len(self.alpha_btns)):
             if self.alpha_btns[i].cget('text') == buttonChr.upper():
                 self.alpha_btns[i].config(state='disabled')
-                checkPic = True
-
-        if checkPic:
-            self.setupPic()
 
         for i in range(0, len(word)):
-            if (word[i] == buttonChr):
+            if word[i] == buttonChr:
                 tempLabel = self.label_vars[i]
                 tempLabel.config(text=buttonChr.upper())
                 self.label_vars[i] = tempLabel
+                checkPic = True
+
+        if not checkPic:
+            self.updatePic()
 
     # self.label.config(text=ch)
     # self.label = tk.Label(textvariable=self.label_var)
@@ -50,17 +53,23 @@ class UI:
         # self.frame = tk.Frame(self.root, borderwidth=0, padx=0, pady=0)
         # self.frame.grid(column=1, row=1)
         # self.frame.place(bordermode=tk.INSIDE, height=100, width=100)
-        url = "https://i.imgur.com/njRN5gQ.png"
+        url = "https://i.imgur.com/tpj2ULE.png"
         response = requests.get(url)
         img_data = response.content
         self.img = ImageTk.PhotoImage(Image.open(BytesIO(img_data)))
-        canvas = tk.Canvas(self.root, width=462, height=354)
-        canvas.place(height=300, width=500, x=300, y=10)
-        canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
+        self.canvas = tk.Canvas(self.root, width=462, height=354)
+        self.canvas.place(height=300, width=500, x=300, y=10)
+        self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
 
-    # canvas.grid(column=1, row=1)
-
-    # img = Image.open(url)
+    def updatePic(self):
+        url = self.stickman.picsUrl[self.counter]
+        response = requests.get(url)
+        img_data = response.content
+        self.img = ImageTk.PhotoImage(Image.open(BytesIO(img_data)))
+        self.canvas = tk.Canvas(self.root, width=462, height=354)
+        self.canvas.place(height=300, width=500, x=300, y=10)
+        self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
+        self.counter += 1
 
     def setupButtons(self):
         control = 1
