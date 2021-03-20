@@ -1,17 +1,15 @@
 import tkinter as tk
 from PIL import ImageTk, Image
-import os
 import requests
 from io import BytesIO
 
 from Stickman import Stickman
-from Alphabuttons import Alphabuttons
 
 
 class UI:
     stickman = Stickman()
     root = tk.Tk(className="Hangman")
-    label = None
+    button = None
     label_var = tk.StringVar()
     alpha_btns = []
     label_vars = []
@@ -26,6 +24,7 @@ class UI:
         self.root.resizable(0, 0)
         self.setupPic()
         self.setupBottomFrame()
+        self.setupRestartLabel()
         self.setupButtons()
         self.root.mainloop()
 
@@ -70,6 +69,17 @@ class UI:
         self.canvas.place(height=300, width=500, x=300, y=10)
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
         self.counter += 1
+
+
+    def clickRestart(self):
+        self.counter = 0
+        self.updatePic()
+        self.stickman.next()
+        self.label_vars.clear()
+        self.setupBottomFrame()
+        self.alpha_btns.clear()
+        self.setupButtons()
+
 
     def setupButtons(self):
         control = 1
@@ -123,3 +133,14 @@ class UI:
 
         # self.label = tk.Label(self.root, text="INIT", pady=60)
         # self.label.grid(column=5, row=7)
+
+    def setupRestartLabel(self):
+        var = tk.StringVar()
+        self.button = tk.Button(self.root, textvariable=var, command=self.clickRestart)
+        var.set("Restart?")
+        self.button.place(height=50, width=75, x=0, y=550)
+
+
+
+
+

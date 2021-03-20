@@ -13,12 +13,18 @@ class Stickman:
     currentImg = None
 
     def __init__(self):
-        temp = GenerateString()
-        self.rmdStr = temp.rmdWord
-        self.lines = 0
-        for i in range(97, 123):
-            self.words_dict[chr(i)] = self.rmdStr
+        self.next()
 
 
     def add(self):
         self.lines += 1
+
+
+
+    def next(self):
+        temp = GenerateString()
+        self.rmdStr = temp.rmdWord
+        self.lines = 0
+        self.words_dict.clear()
+        for i in range(97, 123):
+            self.words_dict[chr(i)] = self.rmdStr
