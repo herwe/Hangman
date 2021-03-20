@@ -17,7 +17,9 @@ class UI:
     frame = None
     canvas = None
     newImg = None
-    counter = 1
+    endScreen = None
+    missCounter = 1
+    hitCounter = 1
 
     def __init__(self):
         self.root.geometry("850x600")
@@ -29,12 +31,15 @@ class UI:
         self.root.mainloop()
 
     def clickBtn(self, buttonChr):
+        print(self.hitCounter)
         checkPic = False
         word = self.stickman.words_dict.get("a")
         for i in range(0, len(self.alpha_btns)):
             if self.alpha_btns[i].cget('text') == buttonChr.upper():
                 self.alpha_btns[i].config(state='disabled')
+                self.hitCounter += 1
 
+        print(len(word))
         for i in range(0, len(word)):
             if word[i] == buttonChr:
                 tempLabel = self.label_vars[i]
@@ -43,10 +48,20 @@ class UI:
                 checkPic = True
 
         if not checkPic:
-            self.updatePic()
+            if self.missCounter == 6:
+                self.updatePic()
+                self.disableAllButtons()
+            elif self.hitCounter == len(word-1):
+                print("klart")
+            else:
+                self.updatePic()
 
     # self.label.config(text=ch)
     # self.label = tk.Label(textvariable=self.label_var)
+
+    def disableAllButtons(self):
+        for i in range(0, len(self.alpha_btns)):
+            self.alpha_btns[i].config(state='disabled')
 
     def setupPic(self):
         # self.frame = tk.Frame(self.root, borderwidth=0, padx=0, pady=0)
@@ -61,25 +76,24 @@ class UI:
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
 
     def updatePic(self):
-        url = self.stickman.picsUrl[self.counter]
+        url = self.stickman.picsUrl[self.missCounter]
         response = requests.get(url)
         img_data = response.content
         self.img = ImageTk.PhotoImage(Image.open(BytesIO(img_data)))
         self.canvas = tk.Canvas(self.root, width=462, height=354)
         self.canvas.place(height=300, width=500, x=300, y=10)
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
-        self.counter += 1
-
+        self.missCounter += 1
 
     def clickRestart(self):
-        self.counter = 0
+        self.missCounter = 0
+        self.hitCounter = 0
         self.updatePic()
         self.stickman.next()
         self.label_vars.clear()
         self.setupBottomFrame()
         self.alpha_btns.clear()
         self.setupButtons()
-
 
     def setupButtons(self):
         control = 1
@@ -139,8 +153,3 @@ class UI:
         self.button = tk.Button(self.root, textvariable=var, command=self.clickRestart)
         var.set("Restart?")
         self.button.place(height=50, width=75, x=0, y=550)
-
-
-
-
-
