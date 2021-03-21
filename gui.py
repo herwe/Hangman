@@ -17,9 +17,10 @@ class UI:
     frame = None
     canvas = None
     newImg = None
-    endScreen = None
+    endScreen = tk.Label(root, text="You win!", font="Verdana 20 bold", fg="green")
     missCounter = 1
     hitCounter = 1
+
 
     def __init__(self):
         self.root.geometry("850x600")
@@ -31,28 +32,34 @@ class UI:
         self.root.mainloop()
 
     def clickBtn(self, buttonChr):
-        print(self.hitCounter)
         checkPic = False
         word = self.stickman.words_dict.get("a")
+        wordSize = len(word)
+
         for i in range(0, len(self.alpha_btns)):
             if self.alpha_btns[i].cget('text') == buttonChr.upper():
                 self.alpha_btns[i].config(state='disabled')
-                self.hitCounter += 1
 
         print(len(word))
-        for i in range(0, len(word)):
+        for i in range(0, wordSize):
             if word[i] == buttonChr:
                 tempLabel = self.label_vars[i]
                 tempLabel.config(text=buttonChr.upper())
                 self.label_vars[i] = tempLabel
                 checkPic = True
+                self.hitCounter += 1
+
+        if self.hitCounter == wordSize:
+            self.disableAllButtons()
+            self.endScreen.config(text="You Win!")
+            self.endScreen.place(height=50, width=200, x=450, y=550)
+
+        print(self.hitCounter)
 
         if not checkPic:
             if self.missCounter == 6:
                 self.updatePic()
                 self.disableAllButtons()
-            elif self.hitCounter == len(word-1):
-                print("klart")
             else:
                 self.updatePic()
 
@@ -86,8 +93,9 @@ class UI:
         self.missCounter += 1
 
     def clickRestart(self):
+        self.endScreen.config(text=" ")
         self.missCounter = 0
-        self.hitCounter = 0
+        self.hitCounter = 1
         self.updatePic()
         self.stickman.next()
         self.label_vars.clear()
@@ -130,16 +138,13 @@ class UI:
         for i in range(0, sizeOfWord - 1):
             tempLabel = tk.Label(self.root, text="_", pady=60, padx=10)
             if 10 < sizeOfWord < 14:
-                print("ett")
                 tempLabel.config(font=("Arial", 25))
             elif 14 <= sizeOfWord < 18:
-                print("tva")
                 tempLabel.config(font=("Arial", 15))
             elif 18 <= sizeOfWord < 25:
                 tempLabel.config(font=("Arial", 10))
             else:
                 tempLabel.config(font=("Arial", 40))
-                print("tre")
 
             tempLabel.grid(column=column, row=7)
             self.label_vars.append(tempLabel)

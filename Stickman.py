@@ -13,6 +13,7 @@ class Stickman:
                "https://i.imgur.com/1iWJtaw.png", "https://i.imgur.com/4CWAWkK.png", "https://i.imgur.com/njRN5gQ.png"]
     currentImg = None
 
+
     def __init__(self):
         self.next()
 
@@ -26,3 +27,5 @@ class Stickman:
         self.words_dict.clear()
         for i in range(97, 123):
             self.words_dict[chr(i)] = self.rmdStr
+
+
