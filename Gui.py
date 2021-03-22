@@ -3,7 +3,7 @@ from PIL import ImageTk, Image
 import requests
 from io import BytesIO
 
-from Stickman import Stickman
+from StickMan import Stickman
 
 
 class UI:
@@ -73,7 +73,7 @@ class UI:
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
 
     def update_pic(self):
-        url = self.stickman.picsUrl[self.miss_counter]
+        url = self.stickman.pics_url[self.miss_counter]
         response = requests.get(url)
         img_data = response.content
         self.img = ImageTk.PhotoImage(Image.open(BytesIO(img_data)))
