@@ -15,7 +15,7 @@ class UI:
     img = None
     frame = None
     canvas = None
-    end_screen = tk.Label(root, text="You win!", font="Verdana 20 bold", fg="green")
+    end_screen = tk.Label(root, text="", font="Verdana 20 bold")
     miss_counter = 1
     hit_counter = 1
 
@@ -29,8 +29,6 @@ class UI:
         self.root.mainloop()
 
     def click_btn(self, button_chr):
-        for hej in self.label_vars:
-            print(hej.cget('text'))
         check_pic = False
         word = self.stickman.words_dict.get("a")
         word_size = len(word)
@@ -49,13 +47,15 @@ class UI:
 
         if self.hit_counter == word_size:
             self.disable_all_buttons()
-            self.end_screen.config(text="You Win!")
+            self.end_screen.config(text="You Win!", fg="green")
             self.end_screen.place(height=50, width=200, x=450, y=550)
 
         if not check_pic:
             if self.miss_counter == 6:
                 self.update_pic()
                 self.disable_all_buttons()
+                self.end_screen.config(text="You Lose!", fg="red")
+                self.end_screen.place(height=50, width=200, x=450, y=550)
             else:
                 self.update_pic()
 
