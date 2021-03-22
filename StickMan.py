@@ -1,7 +1,7 @@
 from GenerateString import GenerateString
 
 
-class Stickman:
+class StickMan:
     lines = None
     words_dict = {}
     rmd_str = None

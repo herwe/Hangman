@@ -1,7 +1,7 @@
 import tkinter as tk
 
 
-class Alphabuttons:
+class AlphaButtons:
     alpha_buttons_list = []
 
     def __init__(self):

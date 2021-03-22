@@ -3,11 +3,11 @@ from PIL import ImageTk, Image
 import requests
 from io import BytesIO
 
-from StickMan import Stickman
+from StickMan import StickMan
 
 
 class UI:
-    stickman = Stickman()
+    stick_man = StickMan()
     root = tk.Tk(className="Hangman")
     button = None
     alpha_btns = []
@@ -30,7 +30,7 @@ class UI:
 
     def click_btn(self, button_chr):
         check_pic = False
-        word = self.stickman.words_dict.get("a")
+        word = self.stick_man.words_dict.get("a")
         word_size = len(word)
 
         for i in range(0, len(self.alpha_btns)):
@@ -73,7 +73,7 @@ class UI:
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
 
     def update_pic(self):
-        url = self.stickman.pics_url[self.miss_counter]
+        url = self.stick_man.pics_url[self.miss_counter]
         response = requests.get(url)
         img_data = response.content
         self.img = ImageTk.PhotoImage(Image.open(BytesIO(img_data)))
@@ -83,7 +83,7 @@ class UI:
         self.miss_counter += 1
 
     def click_restart(self):
-        self.stickman.next()
+        self.stick_man.next()
         self.end_screen.config(text=" ")
         self.miss_counter = 0
         self.hit_counter = 1
@@ -121,7 +121,7 @@ class UI:
             self.alpha_btns.append(btn)
 
     def setup_bottom_frame(self):
-        word = self.stickman.words_dict.get("a")
+        word = self.stick_man.words_dict.get("a")
         size_of_word = len(word)
         column = 7
         for i in range(0, size_of_word - 1):
