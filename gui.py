@@ -29,6 +29,8 @@ class UI:
         self.root.mainloop()
 
     def click_btn(self, button_chr):
+        for hej in self.label_vars:
+            print(hej.cget('text'))
         check_pic = False
         word = self.stickman.words_dict.get("a")
         word_size = len(word)
@@ -81,15 +83,16 @@ class UI:
         self.miss_counter += 1
 
     def click_restart(self):
+        self.stickman.next()
         self.end_screen.config(text=" ")
         self.miss_counter = 0
         self.hit_counter = 1
-        self.update_pic()
         self.destroy_labels()
+        self.label_vars.clear()
+        self.update_pic()
         self.setup_bottom_frame()
         self.alpha_btns.clear()
         self.setup_buttons()
-        self.stickman.next()
 
     def setup_buttons(self):
         control = 1
@@ -119,8 +122,6 @@ class UI:
 
     def setup_bottom_frame(self):
         word = self.stickman.words_dict.get("a")
-        print(word)
-        print(len(word))
         size_of_word = len(word)
         column = 7
         for i in range(0, size_of_word - 1):
@@ -134,9 +135,9 @@ class UI:
             else:
                 temp_label.config(font=("Arial", 40))
 
-            #temp_label.grid(column=column, row=7)
+            temp_label.grid(column=column, row=7)
             self.label_vars.append(temp_label)
-            self.label_vars[len(self.label_vars)-1].grid(column=column, row=7)
+            #self.label_vars[len(self.label_vars)-1].grid(column=column, row=7)
             column += 1
 
     def setup_restart_label(self):

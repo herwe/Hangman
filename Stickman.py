@@ -23,6 +23,7 @@ class Stickman:
     def next(self):
         temp = GenerateString()
         self.rmdStr = temp.rmdWord
+        print(temp.rmdWord)
         self.lines = 0
         self.words_dict.clear()
         for i in range(97, 123):
