@@ -18,7 +18,6 @@ class StickMan:
     def next(self):
         temp = GenerateString()
         self.rmd_str = temp.rmdWord
-        print(temp.rmdWord)
         self.lines = 0
         self.words_dict.clear()
         for i in range(97, 123):
