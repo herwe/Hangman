@@ -150,5 +150,3 @@ class UI:
     def destroy_labels(self):
         for label in self.label_vars:
             label.destroy()
-
-
