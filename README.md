@@ -1,2 +1,2 @@
 # Hangman
-Classical hangman game made in tkinter
+Classic hangman game made in tkinter

@@ -10,16 +10,14 @@ class UI:
     stickman = Stickman()
     root = tk.Tk(className="Hangman")
     button = None
-    label_var = tk.StringVar()
     alpha_btns = []
     label_vars = []
     img = None
     frame = None
     canvas = None
-    newImg = None
-    endScreen = tk.Label(root, text="You win!", font="Verdana 20 bold", fg="green")
-    missCounter = 1
-    hitCounter = 1
+    end_screen = tk.Label(root, text="You win!", font="Verdana 20 bold", fg="green")
+    miss_counter = 1
+    hit_counter = 1
 
     def __init__(self):
         self.root.geometry("850x600")
@@ -30,49 +28,40 @@ class UI:
         self.setup_buttons()
         self.root.mainloop()
 
-    def click_btn(self, buttonChr):
+    def click_btn(self, button_chr):
         check_pic = False
         word = self.stickman.words_dict.get("a")
         word_size = len(word)
 
         for i in range(0, len(self.alpha_btns)):
-            if self.alpha_btns[i].cget('text') == buttonChr.upper():
+            if self.alpha_btns[i].cget('text') == button_chr.upper():
                 self.alpha_btns[i].config(state='disabled')
 
-        print(len(word))
         for i in range(0, word_size):
-            if word[i] == buttonChr:
-                tempLabel = self.label_vars[i]
-                tempLabel.config(text=buttonChr.upper())
-                self.label_vars[i] = tempLabel
+            if word[i] == button_chr:
+                temp_label = self.label_vars[i]
+                temp_label.config(text=button_chr.upper())
+                self.label_vars[i] = temp_label
                 check_pic = True
-                self.hitCounter += 1
+                self.hit_counter += 1
 
-        if self.hitCounter == word_size:
+        if self.hit_counter == word_size:
             self.disable_all_buttons()
-            self.endScreen.config(text="You Win!")
-            self.endScreen.place(height=50, width=200, x=450, y=550)
-
-        print(self.hitCounter)
+            self.end_screen.config(text="You Win!")
+            self.end_screen.place(height=50, width=200, x=450, y=550)
 
         if not check_pic:
-            if self.missCounter == 6:
+            if self.miss_counter == 6:
                 self.update_pic()
                 self.disable_all_buttons()
             else:
                 self.update_pic()
-
-    # self.label.config(text=ch)
-    # self.label = tk.Label(textvariable=self.label_var)
 
     def disable_all_buttons(self):
         for i in range(0, len(self.alpha_btns)):
             self.alpha_btns[i].config(state='disabled')
 
     def setup_pic(self):
-        # self.frame = tk.Frame(self.root, borderwidth=0, padx=0, pady=0)
-        # self.frame.grid(column=1, row=1)
-        # self.frame.place(bordermode=tk.INSIDE, height=100, width=100)
         url = "https://i.imgur.com/tpj2ULE.png"
         response = requests.get(url)
         img_data = response.content
@@ -82,25 +71,25 @@ class UI:
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
 
     def update_pic(self):
-        url = self.stickman.picsUrl[self.missCounter]
+        url = self.stickman.picsUrl[self.miss_counter]
         response = requests.get(url)
         img_data = response.content
         self.img = ImageTk.PhotoImage(Image.open(BytesIO(img_data)))
         self.canvas = tk.Canvas(self.root, width=462, height=354)
         self.canvas.place(height=300, width=500, x=300, y=10)
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
-        self.missCounter += 1
+        self.miss_counter += 1
 
     def click_restart(self):
-        self.endScreen.config(text=" ")
-        self.missCounter = 0
-        self.hitCounter = 1
+        self.end_screen.config(text=" ")
+        self.miss_counter = 0
+        self.hit_counter = 1
         self.update_pic()
-        self.stickman.next()
-        self.label_vars.clear()
+        self.destroy_labels()
         self.setup_bottom_frame()
         self.alpha_btns.clear()
         self.setup_buttons()
+        self.stickman.next()
 
     def setup_buttons(self):
         control = 1
@@ -145,15 +134,20 @@ class UI:
             else:
                 temp_label.config(font=("Arial", 40))
 
-            temp_label.grid(column=column, row=7)
+            #temp_label.grid(column=column, row=7)
             self.label_vars.append(temp_label)
+            self.label_vars[len(self.label_vars)-1].grid(column=column, row=7)
             column += 1
-
-        # self.label = tk.Label(self.root, text="INIT", pady=60)
-        # self.label.grid(column=5, row=7)
 
     def setup_restart_label(self):
         var = tk.StringVar()
         self.button = tk.Button(self.root, textvariable=var, command=self.click_restart)
         var.set("Restart?")
         self.button.place(height=50, width=75, x=0, y=550)
+
+
+    def destroy_labels(self):
+        for label in self.label_vars:
+            label.destroy()
+
+
