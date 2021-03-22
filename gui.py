@@ -31,31 +31,31 @@ class UI:
         self.root.mainloop()
 
     def click_btn(self, buttonChr):
-        checkPic = False
+        check_pic = False
         word = self.stickman.words_dict.get("a")
-        wordSize = len(word)
+        word_size = len(word)
 
         for i in range(0, len(self.alpha_btns)):
             if self.alpha_btns[i].cget('text') == buttonChr.upper():
                 self.alpha_btns[i].config(state='disabled')
 
         print(len(word))
-        for i in range(0, wordSize):
+        for i in range(0, word_size):
             if word[i] == buttonChr:
                 tempLabel = self.label_vars[i]
                 tempLabel.config(text=buttonChr.upper())
                 self.label_vars[i] = tempLabel
-                checkPic = True
+                check_pic = True
                 self.hitCounter += 1
 
-        if self.hitCounter == wordSize:
+        if self.hitCounter == word_size:
             self.disable_all_buttons()
             self.endScreen.config(text="You Win!")
             self.endScreen.place(height=50, width=200, x=450, y=550)
 
         print(self.hitCounter)
 
-        if not checkPic:
+        if not check_pic:
             if self.missCounter == 6:
                 self.update_pic()
                 self.disable_all_buttons()
@@ -132,21 +132,21 @@ class UI:
         word = self.stickman.words_dict.get("a")
         print(word)
         print(len(word))
-        sizeOfWord = len(word)
+        size_of_word = len(word)
         column = 7
-        for i in range(0, sizeOfWord - 1):
-            tempLabel = tk.Label(self.root, text="_", pady=60, padx=10)
-            if 10 < sizeOfWord < 14:
-                tempLabel.config(font=("Arial", 25))
-            elif 14 <= sizeOfWord < 18:
-                tempLabel.config(font=("Arial", 15))
-            elif 18 <= sizeOfWord < 25:
-                tempLabel.config(font=("Arial", 10))
+        for i in range(0, size_of_word - 1):
+            temp_label = tk.Label(self.root, text="_", pady=60, padx=10)
+            if 10 < size_of_word < 14:
+                temp_label.config(font=("Arial", 25))
+            elif 14 <= size_of_word < 18:
+                temp_label.config(font=("Arial", 15))
+            elif 18 <= size_of_word < 25:
+                temp_label.config(font=("Arial", 10))
             else:
-                tempLabel.config(font=("Arial", 40))
+                temp_label.config(font=("Arial", 40))
 
-            tempLabel.grid(column=column, row=7)
-            self.label_vars.append(tempLabel)
+            temp_label.grid(column=column, row=7)
+            self.label_vars.append(temp_label)
             column += 1
 
         # self.label = tk.Label(self.root, text="INIT", pady=60)
